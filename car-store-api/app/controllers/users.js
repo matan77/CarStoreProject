@@ -1,4 +1,4 @@
-const { registerUser, loginUser } = require('../services/users');
+const { registerUser, loginUser, deleteUser } = require('../services/users');
 
 
 module.exports = {
@@ -7,6 +7,17 @@ module.exports = {
         try {
             const result = await registerUser(firstName, lastName, email, password, role);
             res.status(201).json(result);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
+    deleteUser: async (req, res) => {
+        try {
+            const id = req.user.id;
+
+            res.status(201).json(await deleteUser(id));
+            
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
@@ -21,6 +32,7 @@ module.exports = {
             res.status(401).json({ message: error.message });
         }
     }
+
 };
 
 module.exports = { registerUser, loginUser };

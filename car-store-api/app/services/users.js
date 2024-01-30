@@ -1,7 +1,6 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { use } = require('..');
 require('dotenv').config()
 
 module.exports = {
@@ -24,9 +23,17 @@ module.exports = {
                 throw new Error('Invalid email or password');
             }
 
-            const token = jwt.sign({ user: user._id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '7d' });
+            const token = jwt.sign({ user: { id: user._id, role: user.role } }, process.env.SECRET_KEY, { expiresIn: '7d' });
             return { token };
         } catch (error) {
+            throw new Error('Internal Server Error');
+        }
+    },
+    delete: async (id) => {
+        try {
+            return await User.deleteOne({ _id: id });
+        }
+        catch (error) {
             throw new Error('Internal Server Error');
         }
     }
