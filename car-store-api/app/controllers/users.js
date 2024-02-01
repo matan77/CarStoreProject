@@ -75,7 +75,7 @@ module.exports = {
 
             try {
                 const result = await usersService.updateUser(id, firstName, lastName);
-                res.status(201).json(result);
+                res.status(202).json(result);
             } catch (error) {
                 res.status(500).json({ message: error.message });
             }
@@ -87,7 +87,7 @@ module.exports = {
         try {
             const id = req.user.id;
 
-            res.status(201).json(await usersService.deleteUser(id));
+            res.status(200).json(await usersService.deleteUser(id));
 
         } catch (error) {
             res.status(500).json({ message: error.message });
