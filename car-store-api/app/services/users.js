@@ -8,10 +8,12 @@ module.exports = {
     registerUser: async (firstName, lastName, email, password, role) => {
         try {
             const hashedPassword = await bcrypt.hash(password, 10);
-            const result = await User.create({ firstName, lastName, email, password: hashedPassword, role });
-            return result;
+            await User.create({ firstName, lastName, email, password: hashedPassword, role });
         }
         catch (error) {
+            if (error.code === 11000) {
+                throw new Error("There is already account with this email")
+            }
             console.error(error);
             throw error;
         }
@@ -31,7 +33,8 @@ module.exports = {
             const token = jwt.sign({ user: { id: user._id, role: user.role } }, process.env.SECRET_KEY, { expiresIn: '7d' });
             return { token };
         } catch (error) {
-            throw new Error('Internal Server Error');
+            console.log(error);
+            throw error;
         }
     },
 

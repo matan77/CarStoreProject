@@ -20,7 +20,7 @@ module.exports = {
             const { firstName, lastName, email, password, role } = req.body;
             try {
                 const result = await usersService.registerUser(firstName, lastName, email, password, role);
-                res.status(201).json(result);
+                res.status(201);
             } catch (error) {
                 res.status(500).json({ message: error.message });
             }

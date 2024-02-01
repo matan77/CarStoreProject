@@ -6,10 +6,10 @@ const authenticateJWT = (req, res, next) => {
 
     if (!token) return res.status(401).json({ message: 'Unauthorized' });
 
-    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
+    jwt.verify(token, process.env.SECRET_KEY, (err, payload) => {
         if (err) return res.status(403).json({ message: 'Forbidden' });
 
-        req.user = user;
+        req.user = payload.user;
         next();
     });
 };
