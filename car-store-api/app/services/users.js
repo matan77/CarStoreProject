@@ -18,6 +18,7 @@ module.exports = {
             throw error;
         }
     },
+
     loginUser: async (email, password) => {
         try {
             const user = await User.findOne({ email });
@@ -65,6 +66,16 @@ module.exports = {
     deleteUser: async (id) => {
         try {
             return User.updateOne({ _id: id }, { $set: { isDeleted: true } });
+        }
+        catch (error) {
+            throw new Error('Internal Server Error');
+        }
+    },
+
+    isUserDeleted: async (id) => {
+        try {
+            const user = await User.findOne({ _id: id });
+            return user.isDeleted;
         }
         catch (error) {
             throw new Error('Internal Server Error');

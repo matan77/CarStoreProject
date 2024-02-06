@@ -20,12 +20,13 @@ module.exports = {
             const { firstName, lastName, email, password, role } = req.body;
             try {
                 const result = await usersService.registerUser(firstName, lastName, email, password, role);
-                res.status(201);
+                res.status(201).json(result);
             } catch (error) {
                 res.status(500).json({ message: error.message });
             }
         }
     ],
+    
     loginUser: [
         body('email').isEmail().withMessage('Invalid email address'),
         body('password')
@@ -82,7 +83,6 @@ module.exports = {
         }
     ],
 
-
     deleteUser: async (req, res) => {
         try {
             const id = req.user.id;
@@ -92,8 +92,5 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
-    },
-
-
-
+    }
 };
