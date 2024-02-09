@@ -1,5 +1,5 @@
 const ordersService = require('../services/orders');
-const { body, param, validationResult } = require('express-validator');
+const { param, validationResult } = require('express-validator');
 
 
 module.exports = {
