@@ -1,8 +1,11 @@
 import '../styles/globals.css';
 import Layout from '../components/layout';
 import { DarkModeProvider } from '../utils/darkModeContext';
+import { UserProvider } from '../utils/userContext';
 import { useRouter } from 'next/router';
 import ThemeToggle from '../components/themeToggle';
+import Footer from '../components/footer';
+
 
 
 export default function App({ Component, pageProps }) {
@@ -12,20 +15,24 @@ export default function App({ Component, pageProps }) {
     if (router.pathname === '/404' || router.pathname === '/500') {
         return (
             <DarkModeProvider>
-                <div className='fixed top-4 right-2 mr-4'>
+                <div className='flex px-8 py-4 justify-end'>
                     <ThemeToggle />
                 </div>
-                <Component {...pageProps} />5500
+                <Component {...pageProps} />
+                <Footer />
             </DarkModeProvider >
         );
     }
     else {
         return (
             <DarkModeProvider>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
-            </DarkModeProvider>);
+                <UserProvider>
+                    <Layout>
+                        <Component {...pageProps} />
+                    </Layout>
+                </UserProvider>
+            </DarkModeProvider>
+        );
     }
 }
 

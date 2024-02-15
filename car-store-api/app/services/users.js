@@ -32,7 +32,7 @@ module.exports = {
             }
 
             const token = jwt.sign({ user: { id: user._id, role: user.role } }, process.env.SECRET_KEY, { expiresIn: '7d' });
-            return { token };
+            return [{ firstName: user.firstName, lastName: user.lastName }, token];
         } catch (error) {
             console.log(error);
             throw error;

@@ -26,7 +26,7 @@ module.exports = {
             }
         }
     ],
-    
+
     loginUser: [
         body('email').isEmail().withMessage('Invalid email address'),
         body('password')
@@ -42,8 +42,12 @@ module.exports = {
 
             const { email, password } = req.body;
             try {
-                const result = await usersService.loginUser(email, password);
-                res.json(result);
+                const [user, token] = await usersService.loginUser(email, password);
+                res.cookie('authToken', token, {
+                    maxAge: 7 * 24 * 60 * 60 * 1000,
+                    httpOnly: true,
+                });
+                res.json(user);
             } catch (error) {
                 res.status(401).json({ message: error.message });
             }
@@ -59,6 +63,11 @@ module.exports = {
         } catch (error) {
             res.status(500).json({ message: error.message });
         }
+    },
+
+    logoutUser: async (req, res) => {
+        res.clearCookie('authToken');
+        res.status(200).json({ message: 'Logged out successfully' });
     },
 
     updateUser: [

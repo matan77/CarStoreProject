@@ -6,15 +6,11 @@ module.exports = {
     './components/**/*.{html,js,jsx}',
   ],
   theme: {
-    colors: {
-      red: {
-        DEFAULT: '#ff2323', // Default red color
-        light: '#ffc0c0',   // Light mode red color
-        dark: '#d70000',    // Dark mode red color
-      }
-    }
   },
   extend: {},
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')({
+    strategy: 'base', // only generate global styles
+    strategy: 'class', // only generate classes
+  })],
 }
 
