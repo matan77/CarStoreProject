@@ -18,7 +18,6 @@ export default function Navbar() {
         });
     };
 
-    // const user = { firstName: 'matan', lastName: 'haver' }
     return (
         <nav className="flex justify-between items-center py-2 px-8 text-black bg-red-600 dark:bg-red-900 dark:text-white">
             <div className="flex items-center space-x-4">
@@ -29,7 +28,7 @@ export default function Navbar() {
                 <div className="relative flex">
                     <input
                         type="text"
-                        placeholder="Search..."
+                        placeholder="Search car..."
                         className="px-3 text-white placeholder:text-red-950 bg-red-900 dark:bg-red-500 py-1 rounded-md focus:outline-none"
                     />
                     <button className="absolute right-0 top-0 mt-1 mr-1">

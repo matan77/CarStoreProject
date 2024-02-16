@@ -34,10 +34,16 @@ export default function Page() {
             setUser(res.data);
             router.push('/');
         }).catch((error) => {
+            if (error.response.data.message) {
+                setErrors(error.response.data);
+                return;
+            }
             const resErrors = error.response.data.errors;
             const errors = {};
             errors.email = resErrors.find((error) => error.path === 'email')?.msg;
             errors.password = resErrors.find((error) => error.path === 'password')?.msg;
+            errors.password = resErrors.find((error) => error.path === 'password')?.msg;
+
             setErrors(errors);
 
         });
@@ -48,6 +54,8 @@ export default function Page() {
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                 <img className="mx-auto h-40 w-auto" src="/logo.png" alt="Logo" />
                 <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
+                {errors.message && <p className="bg-red-300 border-red-500 border-4 text-center p-4 rounded-md text-red-950 text-xl mt-1">{errors.message}</p>}
+
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
