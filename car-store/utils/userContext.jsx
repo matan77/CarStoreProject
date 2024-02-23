@@ -8,8 +8,8 @@ export const UserProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const router = useRouter();
     useEffect(() => {
-        api.get('/api/users').then((response) => {
-            setUser(response.data)
+        api.get('/api/users').then((res) => {
+            setUser(res.data)
         })
             .catch((error) => {
                 console.log(error);

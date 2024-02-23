@@ -4,7 +4,8 @@ const authenticateJWT = require("../middleware/authenticateJWT")
 const isDeleted = require("../middleware/isDeleted");
 const router = express.Router();
 
-router.post('/buy', [authenticateJWT, isDeleted, ordersController.createOrder]);
+router.get('/myOrders', authenticateJWT, ordersController.getOrdersByUser);
+router.post('/buy/:id', [authenticateJWT, isDeleted, ordersController.createOrder]);
 router.get('/:id', ordersController.getOrder);
 
 module.exports = router;

@@ -7,10 +7,22 @@ body('year').isInt({ min: 1900, max: new Date().getFullYear() }).withMessage('In
 body('price').isNumeric().withMessage('Invalid price'),
 body('mileage').isNumeric().withMessage('Invalid mileage'),
 body('transmissionType').isIn(['Automatic', 'Manual']).withMessage('Invalid transmission type'),
-body('fuelType').optional().isIn(['Gasoline', 'Diesel', 'Electric']).withMessage('Invalid fuel type'),
-body('phone').notEmpty().withMessage('Phone is required')];
+body('fuelType').optional().isIn(['Gasoline', 'Diesel', 'Electric']).withMessage('Invalid fuel type')];
 
 module.exports = {
+    getCars: async (req, res) => {
+        try {
+
+            const page = parseInt(req.query.page) - 1 || 0;
+            const search = req.query.search;
+
+            return res.status(200).json(await carsService.getCars(page, search));
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+    },
+
     getCar: [
         param('id').isMongoId(),
         async (req, res) => {
@@ -23,6 +35,21 @@ module.exports = {
             return res.status(200).json(car);
         }
     ],
+
+    getCarsByUser: async (req, res) => {
+        try {
+            if (req.user.role !== 'Seller') {
+                return res.status(403).json({ message: "Only seller allowed" });
+            }
+
+            const page = parseInt(req.query.page) - 1 || 0;
+
+            return res.status(200).json(await carsService.getCarsByUser(req.user.id, page));
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+    },
 
     createCar: [
         ...validationMiddlewares,
@@ -57,6 +84,10 @@ module.exports = {
         async (req, res) => {
             const errors = validationResult(req);
 
+            if (req.user.role !== 'Seller') {
+                return res.status(403).json({ message: "Only seller allowed" });
+            }
+
             if (!errors.isEmpty()) {
                 return res.status(400).json({ errors: errors.array() });
             }
@@ -75,7 +106,7 @@ module.exports = {
         async (req, res) => {
             try {
                 const carId = req.params.id;
-                return carsService.deleteCar(carId);
+                return res.json(carsService.deleteCar(carId));
             }
             catch (error) {
                 throw new Error('Internal Server Error');

@@ -36,16 +36,11 @@ export default function Page() {
         }).catch((error) => {
             if (error.response.data.message) {
                 setErrors(error.response.data);
-                return;
             }
-            const resErrors = error.response.data.errors;
-            const errors = {};
-            errors.email = resErrors.find((error) => error.path === 'email')?.msg;
-            errors.password = resErrors.find((error) => error.path === 'password')?.msg;
-            errors.password = resErrors.find((error) => error.path === 'password')?.msg;
-
-            setErrors(errors);
-
+            else {
+                const resErrors = error.response.data.errors;
+                setErrors(Object.fromEntries(resErrors.map(error => [error.path, error.msg])))
+            }
         });
     };
 

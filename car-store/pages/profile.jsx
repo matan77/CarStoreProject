@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Link from 'next/link';
 import { UserContext } from '../utils/userContext';
 import { useRouter } from 'next/router';
 import api from '../utils/api';
@@ -8,7 +7,7 @@ export default function Page() {
     const router = useRouter();
     const { user, setUser } = useContext(UserContext);
 
-    const [formData, setFormData] = useState({}); // Set initial formData to an empty object
+    const [formData, setFormData] = useState({});
 
     useEffect(() => {
         if (user !== null) {
@@ -60,14 +59,11 @@ export default function Page() {
             .catch((error) => {
                 if (error.response.data.message) {
                     setErrors(error.response.data);
-                    return;
                 }
-                const resErrors = error.response.data.errors;
-                const errors = {};
-                errors.firstName = resErrors.find((error) => error.path === 'firstName')?.msg;
-                errors.lastName = resErrors.find((error) => error.path === 'lastName')?.msg;
-
-                setErrors(errors);
+                else {
+                    const resErrors = error.response.data.errors;
+                    setErrors(Object.fromEntries(resErrors.map(error => [error.path, error.msg])))
+                }
             });
     };
 

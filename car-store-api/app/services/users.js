@@ -23,16 +23,17 @@ module.exports = {
         try {
             const user = await User.findOne({ email });
 
-            if (user.isDeleted) {
-                throw new Error('The account deleted');
-            }
 
             if (!user || !(await bcrypt.compare(password, user.password))) {
                 throw new Error('Invalid email or password');
             }
 
+            if (user.isDeleted) {
+                throw new Error('The account deleted');
+            }
+
             const token = jwt.sign({ user: { id: user._id, role: user.role } }, process.env.SECRET_KEY, { expiresIn: '7d' });
-            return [{ firstName: user.firstName, lastName: user.lastName }, token];
+            return [{ email: user.email, firstName: user.firstName, lastName: user.lastName, role: user.role }, token];
         } catch (error) {
             console.log(error);
             throw error;

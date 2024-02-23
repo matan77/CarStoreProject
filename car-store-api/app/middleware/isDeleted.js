@@ -1,12 +1,12 @@
-const { isUserDeleted } = require("../services/users")
-const isDeleted = (req, res, next) => {
-    try {
+const { isUserDeleted } = require("../services/users");
 
-        if (isUserDeleted(req.user.id)) {
+const isDeleted = async (req, res, next) => {
+    try {
+        const deleted = await isUserDeleted(req.user.id);
+        if (deleted) {
             return res.status(403).json({ message: 'Forbidden, this account has been deleted' });
         }
-    }
-    catch {
+    } catch (error) {
         return res.status(500).json({ message: error.message });
     }
     next();

@@ -20,7 +20,7 @@ module.exports = {
         param('id').isMongoId(),
         async (req, res) => {
 
-            if (req.user.role !== 'buyer') {
+            if (req.user.role !== 'Buyer') {
                 return res.status(403).json({ message: "Only buyer can order" });
             }
 
@@ -40,5 +40,16 @@ module.exports = {
         }
     ]
     ,
+    getOrdersByUser: async (req, res) => {
+        try {
+
+            const page = parseInt(req.query.page) - 1 || 0;
+            const orders = await ordersService.getOrdersByUser(req.user.id, req.user.role, page);
+            return res.status(200).json(orders);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).json({ error: 'Internal Server Error' });
+        }
+    }
 
 }

@@ -8,8 +8,8 @@ const carSchema = new mongoose.Schema({
     mileage: { type: Number },
     transmissionType: { type: String, enum: ['Automatic', 'Manual'] },
     fuelType: { type: String, enum: ['Gasoline', 'Diesel', 'Electric'] },
-    phone: String,
-    seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+    seller: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    isOrdered: { type: Boolean, default: false }
 });
 
 module.exports = mongoose.model('Car', carSchema);
