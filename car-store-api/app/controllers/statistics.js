@@ -22,7 +22,7 @@ module.exports = {
     getAveragePriceOfCarsSold: async (req, res) => {
         try {
             const averagePriceOfCarsSold = await statisticsService.getAveragePriceOfCarsSold()
-            return res.status(200).json(averagePriceOfCarsSold);
+            return res.status(200).json(averagePriceOfCarsSold[0]);
         } catch (error) {
             console.error(error);
             return res.status(500).json({ error: 'Internal Server Error' });
