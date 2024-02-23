@@ -19,7 +19,7 @@ export default function Page() {
         if (!router.isReady) {
             return;
         }
-        api.get(`/api/cars/?${router.query.search ? `search=${router.query.search}&` : ''}page=${page}`).then((res) => {
+        api.get(`/api/cars/?${router.query.search ? `search=${router.query.search}&` : ''}page=${page.page}`).then((res) => {
             setCars(res.data.cars || []);
             setPage(
                 {
@@ -30,7 +30,7 @@ export default function Page() {
             console.log(error);
             router.push('/');
         });
-    }, [router.isReady, router.query]);
+    }, [router.isReady, router.query, page.page]);
 
     return (
         <>

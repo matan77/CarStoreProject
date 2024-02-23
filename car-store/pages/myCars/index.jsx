@@ -18,7 +18,8 @@ export default function Page() {
 
 
     useEffect(() => {
-        api.get(`/api/cars/myCars?page=${page}`).then((res) => {
+        api.get(`/api/cars/myCars?page=${page.page}`).then((res) => {
+            console.log(res.data.totalPages);
             setCars(res.data.cars);
             setPage(
                 {
@@ -31,7 +32,7 @@ export default function Page() {
             }
             router.push('/');
         });
-    }, []);
+    }, [page.page]);
 
     return (
         <>

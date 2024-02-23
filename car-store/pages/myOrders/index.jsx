@@ -17,7 +17,7 @@ export default function Page() {
 
 
     useEffect(() => {
-        api.get(`/api/orders/myOrders?page=${page}`).then((res) => {
+        api.get(`/api/orders/myOrders?page=${page.page}`).then((res) => {
             setOrders(res.data.orders);
             setPage(
                 {
@@ -28,7 +28,7 @@ export default function Page() {
             console.log(error);
             router.push('/');
         });
-    }, []);
+    }, [page.page]);
 
     return (
         <>
