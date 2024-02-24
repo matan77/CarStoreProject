@@ -29,7 +29,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="flex justify-between items-center py-2 px-8 text-black bg-red-600 dark:bg-red-900 dark:text-white">
+        <nav className="flex w-full justify-between items-center py-2 px-8 text-black bg-red-600 dark:bg-red-900 dark:text-white">
             <div className="flex items-center space-x-4">
                 <img src="/logo.png" alt="Car Store" className="flex me-7 w-20 h-20 scale-150" />
                 <Link href="/">Home</Link>

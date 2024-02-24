@@ -9,8 +9,9 @@ const CarCard = ({ _id, company, model, year, price, mileage, transmissionType, 
     const { user } = useContext(UserContext);
     const [isEmail, setIsEmail] = useState(false);
 
-    const isSeller = user.role === 'Seller' && seller.email === user.email;
-    const canOrder = user.role === 'Buyer';
+    const isSeller = user && user.role === 'Seller' && seller.email === user.email;
+    const canOrder = user && user.role === 'Buyer';
+
 
     const makeOrder = () => {
         api.post(`api/orders/buy/${_id}`).then(

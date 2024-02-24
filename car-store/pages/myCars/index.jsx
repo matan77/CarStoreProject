@@ -38,8 +38,8 @@ export default function Page() {
         <>
             <div className="flex flex-col items-center mt-8">
                 <h1 className="text-3xl font-bold text-center">My Cars</h1>
-                <div className="flex justify-end w-full">
-                    <button type="button" onClick={() => router.push('/myCars/addCar')} className="flex items-center mx-8 justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
+                <div className="flex justify-end w-11/12">
+                    <button type="button" onClick={() => router.push('/myCars/addCar')} className="flex items-center justify-center rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
                         Add Car
                     </button>
                 </div>
