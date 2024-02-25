@@ -6,6 +6,7 @@ import { CalendarIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline';
 export default function OrderCard({ car, buyer, saleDate }) {
     const { user } = useContext(UserContext);
     const seller = car.seller;
+    if (!user) return;
     return (
         <div className="max-w-sm rounded overflow-hidden shadow-xl">
             <div className="px-6 py-4">
